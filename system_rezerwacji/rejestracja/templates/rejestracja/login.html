@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Logowanie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; }
+        .container { max-width: 400px; margin: 60px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
+        h2 { color: #2a7ae2; }
+        .btn { display: inline-block; padding: 10px 20px; background: #2a7ae2; color: #fff; border: none; border-radius: 4px; text-decoration: none; font-size: 1em; margin-top: 16px; }
+        .btn:hover { background: #185a9d; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; margin-bottom: 6px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        .register-links { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Zaloguj się</h2>
+        {% if error_message %}
+            <div style="color: red; margin-bottom: 16px;">{{ error_message }}</div>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="form-group">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+            <button type="submit" class="btn">Zaloguj</button>
+        </form>
+        <div class="register-links">
+            <p>Nie masz konta? <a href="{% url 'rejestracja_pacjent' %}">Zarejestruj się</a></p>
+        </div>
+    </div>
+</body>
+</html>

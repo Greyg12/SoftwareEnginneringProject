@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wybierz termin wizyty</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; }
+        .container { max-width: 500px; margin: 60px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; text-align: center; }
+        h2 { color: #2a7ae2; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background: #e6f0fa; }
+        .btn { padding: 6px 16px; background: #2a7ae2; color: #fff; border: none; border-radius: 4px; text-decoration: none; }
+        .btn:hover { background: #185a9d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Wybierz termin wizyty u: {{ lekarz.user.first_name }} {{ lekarz.user.last_name }}</h2>
+        <form method="post">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <th>Data</th>
+                    <th>Godzina</th>
+                    <th>Wybierz</th>
+                </tr>
+                {% for data, godzina in wolne %}
+                <tr>
+                    <td>{{ data }}</td>
+                    <td>{{ godzina|time:"H:i" }}</td>
+                    <td>
+                        <button type="submit" name="data" value="{{ data }}" style="display:none;"></button>
+                        <button type="submit" name="data" value="{{ data }}" name="godzina" value="{{ godzina|time:'H:i' }}" class="btn" formaction="?data={{ data }}&godzina={{ godzina|time:'H:i' }}">Wybierz</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">Brak wolnych terminów.</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+        <a href="{% url 'wybierz_lekarza' %}?specjalizacja={{ lekarz.specjalizacja }}">Powrót do wyboru lekarza</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Potwierdź rezerwację wizyty</title>
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; }
+        .container { max-width: 400px; margin: 60px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
+        h2 { color: #2a7ae2; }
+        .btn { display: inline-block; padding: 10px 20px; background: #2a7ae2; color: #fff; border: none; border-radius: 4px; text-decoration: none; font-size: 1em; margin-top: 16px; }
+        .btn:hover { background: #185a9d; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; margin-bottom: 6px; }
+        textarea { width: 100%; min-height: 60px; padding: 8px; box-sizing: border-box; }
+        .info { margin-bottom: 18px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Potwierdź rezerwację wizyty</h2>
+        <div class="info">
+            <strong>Lekarz:</strong> {{ lekarz.user.first_name }} {{ lekarz.user.last_name }}<br>
+            <strong>Specjalizacja:</strong> {{ lekarz.specjalizacja }}<br>
+            <strong>Data:</strong> {{ data }}<br>
+            <strong>Godzina:</strong> {{ godzina }}
+        </div>
+        <form method="post" autocomplete="off">
+            {% csrf_token %}
+            <button type="submit" class="btn">Zarezerwuj wizytę</button>
+        </form>
+        <a href="{% url 'wybierz_termin' lekarz.id %}?data={{ data }}">Wróć do wyboru godziny</a>
+        <br><br>
+        <a href="{% url 'historia_wizyt' %}" class="btn" style="background:#888;">Historia wizyt</a>
+    </div>
+</body>
+</html>

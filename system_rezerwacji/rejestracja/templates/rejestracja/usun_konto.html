@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuń konto</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; }
+        .container { max-width: 400px; margin: 60px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
+        h2 { color: #e22a2a; }
+        .btn { padding: 10px 20px; background: #e22a2a; color: #fff; border: none; border-radius: 4px; text-decoration: none; font-size: 1em; margin-top: 16px; }
+        .btn:hover { background: #a91d1d; }
+        textarea { width: 100%; min-height: 60px; max-height: 210px; padding: 8px; box-sizing: border-box; margin-bottom: 16px; resize: vertical; }
+        .info { margin-bottom: 18px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Prośba o usunięcie konta</h2>
+        <div class="info">
+            Wypełnij poniższe pole, aby wysłać prośbę do administratora o usunięcie konta. Twoje konto zostanie usunięte tylko przez administratora.
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <textarea name="wiadomosc" required placeholder="Napisz powód lub wiadomość do administratora..." {% if already_sent %}disabled{% endif %}></textarea>
+            <button type="submit" class="btn" {% if already_sent %}disabled{% endif %}>Wyślij prośbę</button>
+        </form>
+        {% if already_sent %}
+            <div style="color:orange; margin-top:12px;">Prośba o usunięcie konta została już wysłana. Poczekaj na reakcję administratora.</div>
+        {% elif success %}
+            <div style="color:green; margin-top:12px;">Twoja prośba została wysłana do administratora.</div>
+        {% endif %}
+        <a href="{% url 'panel_pacjenta' %}">Powrót</a>
+    </div>
+</body>
+</html>

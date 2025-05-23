@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Terminy lekarza</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; }
+        .container { max-width: 600px; margin: 40px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
+        h2 { color: #2a7ae2; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #e6f0fa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Terminy lekarza: {{ lekarz.user.first_name }} {{ lekarz.user.last_name }} ({{ lekarz.specjalizacja }})</h2>
+        <table>
+            <tr>
+                <th>Data</th>
+                <th>Godzina</th>
+                <th>Pacjent</th>
+                <th>Opis</th>
+            </tr>
+            {% for wizyta in wizyty %}
+            <tr>
+                <td>{{ wizyta.data }}</td>
+                <td>{{ wizyta.godzina }}</td>
+                <td>{{ wizyta.imie }} {{ wizyta.nazwisko }}</td>
+                <td>{{ wizyta.opis }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">Brak wizyt dla tego lekarza.</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{% url 'lista_lekarzy' %}">Powrót do listy lekarzy</a>
+    </div>
+</body>
+</html>

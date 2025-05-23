@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wybierz godzinę wizyty</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; }
+        .container { max-width: 400px; margin: 60px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; text-align: center; }
+        h2 { color: #2a7ae2; }
+        .btn { padding: 8px 16px; background: #2a7ae2; color: #fff; border: none; border-radius: 4px; text-decoration: none; margin: 8px 0; }
+        .btn[disabled], .btn.disabled { background: #ccc; color: #888; cursor: not-allowed; }
+        .btn:hover:not([disabled]):not(.disabled) { background: #185a9d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Wybierz godzinę wizyty<br>u: {{ lekarz.user.first_name }} {{ lekarz.user.last_name }}<br>w dniu: {{ dzien }}</h2>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="data" value="{{ dzien }}">
+            {% if error %}
+                <div style="color:red; margin-bottom:10px;">{{ error }}</div>
+            {% endif %}
+            {% if wolne_godziny %}
+                {% for godzina in wolne_godziny %}
+                    <button type="submit" name="godzina" value="{{ godzina|time:'H:i' }}" class="btn">{{ godzina|time:"H:i" }}</button>
+                {% endfor %}
+            {% else %}
+                <div>Brak wolnych godzin w tym dniu. Po zamknięciu tej strony termin zostanie usunięty.</div>
+                <script>
+                    // Automatycznie wyślij żądanie do usunięcia terminu po załadowaniu strony
+                    fetch("{% url 'usun_termin' %}?lekarz_id={{ lekarz.id }}&data={{ dzien }}", {method: "POST", headers: {'X-CSRFToken': '{{ csrf_token }}'}})
+                        .then(() => {
+                            setTimeout(function() {
+                                window.location.href = "{% url 'wybierz_termin' lekarz.id %}";
+                            }, 1500);
+                        });
+                </script>
+            {% endif %}
+        </form>
+        <a href="{% url 'wybierz_termin' lekarz.id %}">Wybierz inny dzień</a>
+    </div>
+</body>
+</html>

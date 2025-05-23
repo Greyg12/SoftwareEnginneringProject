@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Mój terminarz</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; }
+        .container { max-width: 600px; margin: 40px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
+        h2 { color: #2a7ae2; }
+        .info { margin-bottom: 24px; font-size: 1.1em; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #e6f0fa; }
+        .btn {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 10px 20px;
+            background: #2a7ae2;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background: #1a5bb8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Mój terminarz</h2>
+        <a href="{% url 'wiadomosc_do_admina' %}" class="btn" style="margin-bottom:18px;">Napisz do administratora</a>
+        <div class="info">
+            <strong>Lekarz:</strong> {{ lekarz.user.first_name }} {{ lekarz.user.last_name }}<br>
+            <strong>Specjalizacja:</strong> {{ lekarz.specjalizacja }}
+        </div>
+        <table>
+            <tr>
+                <th>Termin wizyty</th>
+                <th>Pacjent</th>
+            </tr>
+            {% for wizyta in wizyty %}
+            <tr>
+                <td>
+                    {% if wizyta.termin %}
+                        {{ wizyta.termin.data|date:"d.m.Y" }} {{ wizyta.termin.godzina|time:"H:i" }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if wizyta.pacjent %}
+                        {{ wizyta.pacjent.user.first_name }} {{ wizyta.pacjent.user.last_name }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">Brak wizyt.</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{% url 'logout' %}">Wyloguj się</a>
+    </div>
+</body>
+</html>

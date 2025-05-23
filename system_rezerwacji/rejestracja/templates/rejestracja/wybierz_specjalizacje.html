@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wybierz specjalizację</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; }
+        .container { max-width: 400px; margin: 60px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; text-align: center; }
+        h2 { color: #2a7ae2; }
+        .btn { display: block; width: 100%; padding: 12px 0; background: #2a7ae2; color: #fff; border: none; border-radius: 4px; text-decoration: none; font-size: 1.1em; margin: 16px 0; }
+        .btn:hover { background: #185a9d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Wybierz specjalizację</h2>
+        {% for value, label in specjalizacje %}
+            <a href="{% url 'wybierz_lekarza' %}?specjalizacja={{ value }}" class="btn">{{ label }}</a>
+        {% endfor %}
+        <a href="{% url 'panel_pacjenta' %}" class="btn" style="background:#888;">Powrót</a>
+    </div>
+</body>
+</html>

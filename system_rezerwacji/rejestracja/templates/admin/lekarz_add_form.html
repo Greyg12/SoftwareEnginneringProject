@@ -1,0 +1,14 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+  <h1>Dodaj lekarza</h1>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <input type="submit" value="Dodaj lekarza" class="default">
+    <a href="{% url 'admin:rejestracja_lekarz_changelist' %}" style="margin-left:20px;">Anuluj</a>
+  </form>
+{% endblock %}

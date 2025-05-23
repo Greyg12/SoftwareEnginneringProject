@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Dostępni lekarze</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; }
+        .container { max-width: 600px; margin: 40px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
+        h2 { color: #2a7ae2; }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 18px; }
+        .btn { padding: 6px 16px; background: #2a7ae2; color: #fff; border: none; border-radius: 4px; text-decoration: none; }
+        .btn:hover { background: #185a9d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Dostępni lekarze</h2>
+        <ul>
+            {% for lekarz in lekarze %}
+                <li>
+                    <strong>{{ lekarz.user.first_name }} {{ lekarz.user.last_name }}</strong>
+                    ({{ lekarz.specjalizacja }})
+                    <a href="{% url 'terminy_lekarza' lekarz.id %}" class="btn">Zobacz terminy</a>
+                </li>
+            {% empty %}
+                <li>Brak dostępnych lekarzy.</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'index' %}">Powrót</a>
+    </div>
+</body>
+</html>

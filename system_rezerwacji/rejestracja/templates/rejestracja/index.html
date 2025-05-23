@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>System Rezerwacji Wizyt w Przychodni</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; }
+        .container { max-width: 600px; margin: 60px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
+        h1 { color: #2a7ae2; }
+        .btn { display: inline-block; padding: 12px 24px; background: #2a7ae2; color: #fff; border: none; border-radius: 4px; text-decoration: none; font-size: 1.1em; margin-top: 24px; margin-right: 10px;}
+        .btn:hover { background: #185a9d; }
+        .nav { margin-top: 32px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>System Rezerwacji Wizyt</h1>
+        <p>Witamy w systemie rezerwacji wizyt w naszej przychodni.<br>
+        Zarezerwuj wizytę szybko i wygodnie przez Internet.</p>
+        {% if user.is_authenticated %}
+            <div class="nav">
+                <a href="{% url 'wybierz_specjalizacje' %}" class="btn">Wybór specjalisty</a>
+                <a href="{% url 'historia_wizyt' %}" class="btn">Historia wizyt</a>
+                <a href="{% url 'logout' %}" class="btn" style="background:#888;">Wyloguj się</a>
+            </div>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn">Zarezerwuj wizytę</a>
+        {% endif %}
+    </div>
+</body>
+</html>

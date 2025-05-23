@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Rejestracja pacjenta</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; }
+        .container { max-width: 400px; margin: 60px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
+        h2 { color: #2a7ae2; }
+        .btn { display: inline-block; padding: 10px 20px; background: #2a7ae2; color: #fff; border: none; border-radius: 4px; text-decoration: none; font-size: 1em; margin-top: 16px; }
+        .btn:hover { background: #185a9d; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; margin-bottom: 6px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        .password-help { background: #e6f0fa; color: #185a9d; padding: 10px; border-radius: 4px; margin-bottom: 18px; font-size: 0.97em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Rejestracja pacjenta</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="form-group">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
+            </div>
+            <div class="form-group">
+                {{ form.last_name.label_tag }}
+                {{ form.last_name }}
+            </div>
+            <div class="form-group">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                {{ form.telefon.label_tag }}
+                {{ form.telefon }}
+                {% if form.telefon.errors %}
+                    <div style="color:red;">{{ form.telefon.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+            </div>
+            <div class="form-group">
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+            </div>
+            <div class="password-help">
+                Hasło musi mieć co najmniej 8 znaków, zawierać małe i wielkie litery, cyfrę oraz znak specjalny.
+            </div>
+            <button type="submit" class="btn">Zarejestruj się</button>
+        </form>
+        <p><a href="{% url 'login' %}">Powrót do logowania</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wiadomość do administratora</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; }
+        .container { max-width: 400px; margin: 60px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
+        h2 { color: #2a7ae2; }
+        .btn { padding: 10px 20px; background: #2a7ae2; color: #fff; border: none; border-radius: 4px; text-decoration: none; font-size: 1em; margin-top: 16px; }
+        .btn:hover { background: #185a9d; }
+        textarea { width: 100%; min-height: 60px; max-height: 210px; padding: 8px; box-sizing: border-box; margin-bottom: 16px; resize: vertical; }
+        .success { color: green; margin-bottom: 10px; }
+        .error { color: red; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Wiadomość do administratora</h2>
+        {% if success %}
+            <div class="success">Wiadomość została wysłana do administratora.</div>
+        {% endif %}
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <textarea name="wiadomosc" required placeholder="Napisz wiadomość do administratora..."></textarea>
+            <button type="submit" class="btn">Wyślij</button>
+        </form>
+        <a href="{% url 'moj_terminarz' %}">Powrót</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Rejestracja lekarza - oczekiwanie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; }
+        .container { max-width: 400px; margin: 60px auto; background: #fff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; text-align: center; }
+        h2 { color: #2a7ae2; }
+        .btn { display: inline-block; padding: 10px 20px; background: #2a7ae2; color: #fff; border: none; border-radius: 4px; text-decoration: none; font-size: 1em; margin-top: 16px; }
+        .btn:hover { background: #185a9d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Rejestracja zakończona</h2>
+        <p>Twoje konto lekarza zostało utworzone.<br>
+        Oczekuj na akceptację przez administratora.</p>
+        <a href="{% url 'login' %}" class="btn">Powrót do logowania</a>
+    </div>
+</body>
+</html>
