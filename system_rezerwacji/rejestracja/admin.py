@@ -125,7 +125,7 @@ class TerminAdmin(admin.ModelAdmin):
     def get_pacjent(self, obj):
         wizyta = Wizyta.objects.filter(termin=obj).first()
         if wizyta:
-            return f"{wizyta.imie} {wizyta.nazwisko}"
+            return f"{wizyta.pacjent.user.first_name} {wizyta.pacjent.user.last_name}"
         return "-"
     get_pacjent.short_description = "Pacjent"
     get_pacjent.admin_order_field = 'wizyta__nazwisko'
@@ -181,12 +181,13 @@ class UsunKontoRequestAdmin(admin.ModelAdmin):
 @admin.register(WiadomoscOdLekarza)
 class WiadomoscOdLekarzaAdmin(admin.ModelAdmin):
     list_display = ('lekarz', 'data_wyslania', 'skrot_tresci')
-    search_fields = ('lekarz__username', 'lekarz__first_name', 'lekarz__last_name', 'tresc')
+    search_fields = ('lekarz__user__username', 'lekarz__user__first_name', 'lekarz__user__last_name', 'tresc')
     readonly_fields = ('lekarz', 'tresc', 'data_wyslania')
 
     def skrot_tresci(self, obj):
         return (obj.tresc[:60] + '...') if len(obj.tresc) > 60 else obj.tresc
     skrot_tresci.short_description = "Treść"
+
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'first_name', 'last_name', 'email', 'telefon', 'rola')

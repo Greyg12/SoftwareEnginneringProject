@@ -208,7 +208,6 @@ def rezerwuj_wizyte(request):
         profil = Profil.objects.get(user=request.user)
         Wizyta.objects.create(
             pacjent=profil,
-            opis=opis,
             lekarz=lekarz,
             termin=termin
         )
@@ -362,8 +361,12 @@ def wiadomosc_do_admina(request):
         if not tresc:
             error = "Wiadomość nie może być pusta."
         else:
+            # Pobierz instancję Lekarza powiązaną z użytkownikiem
+            lekarz_instance = Lekarz.objects.get(user=request.user)
+
             # Zapisz do bazy
-            WiadomoscOdLekarza.objects.create(lekarz=request.user, tresc=tresc)
+            WiadomoscOdLekarza.objects.create(lekarz=lekarz_instance, tresc=tresc)
+
             # Wyślij do admina
             mail_admins(
                 subject=f"Wiadomość od lekarza: {request.user.get_full_name()} ({request.user.username})",

@@ -20,14 +20,12 @@
                 <th>Data</th>
                 <th>Godzina</th>
                 <th>Pacjent</th>
-                <th>Opis</th>
             </tr>
             {% for wizyta in wizyty %}
             <tr>
                 <td>{{ wizyta.data }}</td>
                 <td>{{ wizyta.godzina }}</td>
                 <td>{{ wizyta.imie }} {{ wizyta.nazwisko }}</td>
-                <td>{{ wizyta.opis }}</td>
             </tr>
             {% empty %}
             <tr>
